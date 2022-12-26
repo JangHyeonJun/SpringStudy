@@ -12,11 +12,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderServiceImpl implements OrderService {
 
-    private final MemberRepository memberRepository;
-    private final DiscountPolicy discountPolicy;
-
+    @Autowired private final MemberRepository memberRepository;
+    private DiscountPolicy discountPolicy; // 공부를 위해 final 키워드 제거해둠
+    
     @Autowired
+    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+        System.out.println("[set] discountPolicy = " + discountPolicy);
+        this.discountPolicy = discountPolicy;
+    }
+
+    @Autowired // 기본 생성자만 있을때는 Bean을 생성하기 위해 가져다 쓰므로, Autowired 없이 의존관계 주입 발생.
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        System.out.println("memberRepository = " + memberRepository + " discountPolicy = " + discountPolicy);
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
